@@ -1,0 +1,48 @@
+####################################
+# 포트 및 프로젝트 명칭 설정
+####################################
+server:
+  port: 80                    # 포트 설정
+  servlet:
+    session:
+      timeout: 30m             # 세션 타임아웃 설정(기본값 30분)
+
+spring:
+  application:
+    name: spring-boot-library  # 프로젝트 명칭 설정
+  config:
+    import: optional:classpath:application-db.yml  # 데이터베이스 설정 파일을 불러옴
+
+
+
+  ####################################
+  # devtools 설정
+  ####################################
+  devtools:
+    livereload:
+      enabled: true           # 자동 리로드 설정
+    restart:
+      enabled: true           # 자동 재실행 설정
+      preserve-session: true  # 세션 유지 설정
+
+  ####################################
+  # JPA 설정
+  ####################################
+  jpa:
+    open-in-view: true      #
+    hibernate:
+      ddl-auto: update      # create, update, ...
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy # 카멜표기를 스네이크 표기로 변환
+    show-sql: true          # SQL 구문 보이기
+    properties:
+      hibernate:
+        format_sql: true    # 포멧 처리해서 보이기
+        default_batch_fetch_size: 1000  # 한번에 가져올 데이터 양 in 으로 쿼리 처리
+    #database-platform: org.hibernate.dialect.MySQL8Dialect  # MySQL8 버전 사용 --> 사용하지 않아도 됨. 자동으로 설정됨.
+
+  data:
+    rest:
+      base-path: /api
+
+
