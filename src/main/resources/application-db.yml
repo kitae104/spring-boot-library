@@ -4,3 +4,8 @@ spring:
     url: jdbc:mysql://localhost:3306/reactlibrarydatabase?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false
     username: root
     password: 1234
+
+okta:
+  oauth2:
+    client-id: 0oai4bvv99p1Jl5rH5d7
+    issuer: https://dev-25583427.okta.com/oauth2/default
