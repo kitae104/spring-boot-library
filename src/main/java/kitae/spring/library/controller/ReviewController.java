@@ -14,7 +14,7 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @GetMapping("/secure")
+    @PostMapping("/secure")
     public void postReview(@RequestHeader(value="Authorization") String token, @RequestBody ReviewRequestDto reviewRequest) {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         if(userEmail == null) {
