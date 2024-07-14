@@ -1,10 +1,14 @@
 package kitae.spring.library.controller;
 
+import kitae.spring.library.dto.ShelfCurrentLoansResponseDto;
 import kitae.spring.library.entity.Book;
 import kitae.spring.library.service.BookService;
 import kitae.spring.library.utils.ExtractJWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.util.List;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -13,6 +17,14 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
 
     private final BookService bookService;
+
+    @GetMapping("/secure/currentloans")
+    public List<ShelfCurrentLoansResponseDto> currentLoans(@RequestHeader(value = "Authorization") String token) throws ParseException {
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
+        List<ShelfCurrentLoansResponseDto> currentLoans = bookService.currentLoans(userEmail);
+        System.out.println("==============>> currentLoans: " + currentLoans);
+        return currentLoans;
+    }
 
     @GetMapping("/secure/currentloans/count")
     public int currentLoansCount(@RequestHeader(value = "Authorization") String token) {
@@ -36,5 +48,17 @@ public class BookController {
         Book book = bookService.checkoutBook(userEmail, bookId);
         System.out.println("==============>> book: " + book);
         return book;
+    }
+
+    @PutMapping("/secure/return")
+    public void returnBook(@RequestHeader(value = "Authorization") String token, @RequestParam Long bookId) {
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
+        bookService.returnBook(userEmail, bookId);
+    }
+
+    @PutMapping("/secure/renew/loan")
+    public void renewLoan(@RequestHeader(value = "Authorization") String token, @RequestParam Long bookId) throws Exception {
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
+        bookService.renewLoan(userEmail, bookId);
     }
 }

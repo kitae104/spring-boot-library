@@ -19,7 +19,10 @@ public class SecurityConfig {
 
         // /api/<type>/secure 경로에 대한 인증 처리
         http.authorizeRequests(authorize -> authorize
-                .requestMatchers("/api/books/secure/**", "/api/reviews/secure/**")
+                .requestMatchers(
+                        "/api/books/secure/**",
+                        "/api/messages/secure/**",
+                        "/api/reviews/secure/**")
                 .authenticated());
 
         //  JWT 토큰을 사용하여 OAuth2 리소스 서버 구성
