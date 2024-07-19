@@ -1,6 +1,6 @@
 package kitae.spring.library.controller;
 
-import kitae.spring.library.dto.ShelfCurrentLoansResponseDto;
+import kitae.spring.library.dto.ShelfCurrentLoansResponse;
 import kitae.spring.library.entity.Book;
 import kitae.spring.library.service.BookService;
 import kitae.spring.library.utils.ExtractJWT;
@@ -19,9 +19,9 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("/secure/currentloans")
-    public List<ShelfCurrentLoansResponseDto> currentLoans(@RequestHeader(value = "Authorization") String token) throws ParseException {
+    public List<ShelfCurrentLoansResponse> currentLoans(@RequestHeader(value = "Authorization") String token) throws ParseException {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
-        List<ShelfCurrentLoansResponseDto> currentLoans = bookService.currentLoans(userEmail);
+        List<ShelfCurrentLoansResponse> currentLoans = bookService.currentLoans(userEmail);
         System.out.println("==============>> currentLoans: " + currentLoans);
         return currentLoans;
     }

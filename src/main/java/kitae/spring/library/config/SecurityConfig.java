@@ -22,6 +22,7 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/api/books/secure/**",
                         "/api/messages/secure/**",
+                        "/api/admin/secure/**",
                         "/api/reviews/secure/**")
                 .authenticated());
 

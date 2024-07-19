@@ -1,6 +1,6 @@
 package kitae.spring.library.controller;
 
-import kitae.spring.library.dto.ReviewRequestDto;
+import kitae.spring.library.dto.ReviewRequest;
 import kitae.spring.library.service.ReviewService;
 import kitae.spring.library.utils.ExtractJWT;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/secure")
-    public void postReview(@RequestHeader(value="Authorization") String token, @RequestBody ReviewRequestDto reviewRequest) {
+    public void postReview(@RequestHeader(value="Authorization") String token, @RequestBody ReviewRequest reviewRequest) {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         if(userEmail == null) {
             throw new IllegalArgumentException("로그인이 필요합니다.");

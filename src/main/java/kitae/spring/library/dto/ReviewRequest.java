@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Optional;
 
 @Data
-public class ReviewRequestDto {
+public class ReviewRequest {
 
     private double rating;  // 별점
 

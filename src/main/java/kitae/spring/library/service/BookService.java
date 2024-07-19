@@ -1,6 +1,6 @@
 package kitae.spring.library.service;
 
-import kitae.spring.library.dto.ShelfCurrentLoansResponseDto;
+import kitae.spring.library.dto.ShelfCurrentLoansResponse;
 import kitae.spring.library.entity.Book;
 import kitae.spring.library.entity.Checkout;
 import kitae.spring.library.entity.History;
@@ -70,8 +70,8 @@ public class BookService {
     }
 
     // 대출한 책들의 정보를 가져오는 메소드
-    public List<ShelfCurrentLoansResponseDto> currentLoans(String userEmail) throws ParseException {
-        List<ShelfCurrentLoansResponseDto> shelfCurrentLoansResponseDtos = new ArrayList<>();   // 대출한 책들의 정보를 담을 DTO 리스트
+    public List<ShelfCurrentLoansResponse> currentLoans(String userEmail) throws ParseException {
+        List<ShelfCurrentLoansResponse> shelfCurrentLoansResponses = new ArrayList<>();   // 대출한 책들의 정보를 담을 DTO 리스트
         List<Checkout> checkoutList = checkoutRepository.findBooksByUserEmail(userEmail);   // 대출한 책들의 정보를 가져옴
         List<Long> bookIdList = new ArrayList<>();  // 대출한 책들의 ID를 담을 리스트
 
@@ -92,10 +92,10 @@ public class BookService {
                 TimeUnit time = TimeUnit.DAYS;                            // 시간 단위를 일로 설정
                 long difference_In_Time = time.convert(d1.getTime() - d2.getTime(), TimeUnit.MILLISECONDS); // 대출 날짜와 현재 날짜의 차이를 계산
 
-                shelfCurrentLoansResponseDtos.add(new ShelfCurrentLoansResponseDto(book, (int) difference_In_Time)); // 책 정보와 대출 날짜와의 차이를 DTO에 추가
+                shelfCurrentLoansResponses.add(new ShelfCurrentLoansResponse(book, (int) difference_In_Time)); // 책 정보와 대출 날짜와의 차이를 DTO에 추가
             }
         }
-        return shelfCurrentLoansResponseDtos;
+        return shelfCurrentLoansResponses;
     }
 
     public void returnBook(String userEmail, Long bookId) {

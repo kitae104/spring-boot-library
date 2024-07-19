@@ -1,5 +1,6 @@
 package kitae.spring.library.controller;
 
+import kitae.spring.library.dto.AdminQuestionRequest;
 import kitae.spring.library.entity.Message;
 import kitae.spring.library.service.MessagesService;
 import kitae.spring.library.utils.ExtractJWT;
@@ -19,5 +20,17 @@ public class MessageController {
                             @RequestBody Message messageRequest) {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         messagesService.postMessage(messageRequest, userEmail);
+    }
+
+    @PutMapping("/secure/admin/message")
+    public void putMessage(@RequestHeader(value = "Authorization") String token,
+                           @RequestBody AdminQuestionRequest adminQuestionRequest) {
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
+        String admin = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
+        if(admin == null || !admin.equals("admin")) {
+            throw new IllegalArgumentException("관리자만 접근 가능합니다.");
+        }
+
+        messagesService.putMessage(adminQuestionRequest, userEmail);
     }
 }

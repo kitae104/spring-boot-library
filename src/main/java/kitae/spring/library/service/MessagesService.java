@@ -1,5 +1,6 @@
 package kitae.spring.library.service;
 
+import kitae.spring.library.dto.AdminQuestionRequest;
 import kitae.spring.library.entity.Message;
 import kitae.spring.library.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,18 @@ public class MessagesService {
                 .build();
 
         messageRepository.save(message);
+    }
+
+    public void putMessage(AdminQuestionRequest adminQuestionRequest, String userEmail) {
+        Message message = messageRepository.findById(adminQuestionRequest.getId()).orElseThrow(
+                () -> new IllegalArgumentException("해당 메시지가 존재하지 않습니다.")
+        );
+
+        message.setAdminEmail(userEmail);
+        message.setResponse(adminQuestionRequest.getResponse());
+        message.setClosed(true);
+
+        messageRepository.save(message);
+
     }
 }

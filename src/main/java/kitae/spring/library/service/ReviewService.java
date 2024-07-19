@@ -1,15 +1,12 @@
 package kitae.spring.library.service;
 
-import kitae.spring.library.dto.ReviewRequestDto;
+import kitae.spring.library.dto.ReviewRequest;
 import kitae.spring.library.entity.Review;
-import kitae.spring.library.repository.BookRepository;
 import kitae.spring.library.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -19,7 +16,7 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
 
-    public void postReview(String userEmail, ReviewRequestDto reviewRequest) {
+    public void postReview(String userEmail, ReviewRequest reviewRequest) {
         Review validateReview = reviewRepository.findByUserEmailAndBookId(userEmail, reviewRequest.getBookId());
         if(validateReview != null) {
             throw new IllegalArgumentException("이미 리뷰를 작성한 책입니다.");
