@@ -2,10 +2,16 @@
 # 포트 및 프로젝트 명칭 설정
 ####################################
 server:
-  port: 80                    # 포트 설정
+  port: 8443                    # 포트 설정
   servlet:
     session:
       timeout: 30m             # 세션 타임아웃 설정(기본값 30분)
+  ssl:
+    enabled: true                               # SSL 사용 여부
+    key-alias: kitaecode                        # 키스토어 별칭
+    key-store: classpath:kitaecode-keystore.p12 # 키스토어 파일 위치
+    key-store-password: secret                  # 키스토어 비밀번호
+    key-store-type: PKCS12                      # 키스토어 타입
 
 spring:
   application:
